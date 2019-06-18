@@ -13,13 +13,10 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.80 Safari/537.36',
 }
 proxies = {
-    'http','http://60.162.83.40:9000',
+    'https':'http://127.0.0.1:8001',
+    'http':'http://127.0.0.1:8001'
 }
 
-#开始
-def start():
-    print('请输入你需要查询的小说书名关键词或者作者名字：')
-    name = str(input())
 
 
 # 根据书名或者作者名列出笔趣阁网站的所有相关小说
@@ -56,9 +53,8 @@ def parse_html(html):
             print(item('.result-game-item-desc').text())
             for i in item('.result-game-item-info-tag').items():
                 print(i.text())
-            print('\n')
             print('-' * 20)
-            print('\n')
+            # print('\n')
             resultindex += 1
         print('请输入你想爬取的小说序号(例如1、2...等)或输入"q"退出程序:')
         while True:
@@ -137,9 +133,10 @@ def asyncdown(urls,filename):
     #         urls.append(row[1])
     #异步请求
     size=len(urls)
-    ru = (grequests.get(u) for u in urls)
+    ru = (grequests.get(u,headers=headers) for u in urls)
     responses =grequests.map(ru)
     bookname = filename +'.txt'
+    # print(responses)
     with open(bookname, 'a', encoding='utf-8') as writebook:
         completed = 0.0
         count = 1

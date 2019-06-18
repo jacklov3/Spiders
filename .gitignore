@@ -2,6 +2,7 @@
 .idea/
 *.csv
 *.txt
+!requirements.txt
 mulprocess_thread_coroutine/
 
 # Byte-compiled / optimized / DLL files
